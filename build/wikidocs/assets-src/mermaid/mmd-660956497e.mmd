@@ -1,0 +1,14 @@
+sequenceDiagram
+    autonumber
+    participant S as 스니퍼
+    participant P as Peripheral (광고자)
+    participant C as Central
+    P-->>S: ADV_IND (ch 37)
+    C->>P: CONNECT_IND (ch 37) — AA, CRCInit, 간격, 채널 맵, hop/CSA
+    Note over S: CONNECT_IND를 잡으면 연결 파라미터 획득
+    S->>S: 같은 채널 선택 알고리즘으로 다음 채널 계산
+    C->>P: 연결 이벤트 0 (데이터 채널 k)
+    P->>C: 응답
+    Note over S: 매 이벤트 채널 전환하며 추적
+    C->>P: LL_CHANNEL_MAP_IND / LL_CONNECTION_UPDATE_IND
+    Note over S: 이 PDU를 놓치면 이후 추적 실패

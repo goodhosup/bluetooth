@@ -1,0 +1,6 @@
+flowchart LR
+    LPN["LPN (배터리 센서)"] -- "Friend Request" --> F["Friend 후보들"]
+    F -- "Friend Offer (RSSI·ReceiveWindow·큐 크기)" --> LPN
+    LPN -- "Friend Poll" --> F1["선택된 Friend"]
+    F1 -- "Friend Update / 저장된 메시지" --> LPN
+    F1 <-- "ADV 베어러" --> NET(("Mesh 네트워크"))

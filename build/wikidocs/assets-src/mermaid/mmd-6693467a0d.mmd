@@ -1,0 +1,13 @@
+sequenceDiagram
+    autonumber
+    participant D as 새 Matter 기기 (Commissionee)
+    participant P as 휴대폰 (Commissioner)
+    Note over D: 전원 투입 → BLE 커미셔닝 광고<br/>처음 30 s: 20–60 ms 간격, 이후 150–1500 ms
+    D-->>P: 광고 (Matter 서비스 데이터: Discriminator, Vendor ID, Product ID)
+    Note over P: QR/수동 코드의 Discriminator와 일치하는 기기 선택
+    P->>D: LE 연결 + GATT (Matter BLE 서비스) → BTP 세션 수립
+    P->>D: PASE (설정 코드 기반 SPAKE2+)
+    P->>D: 기기 인증(DAC 증명서 확인) · CSR 요청 → 운영 인증서(NOC) 설치
+    P->>D: 네트워크 자격 정보 (Wi-Fi SSID/암호 또는 Thread 운영 데이터셋)
+    Note over D: Wi-Fi/Thread 접속, BLE 커미셔닝 광고 중지
+    P->>D: CASE (IP 위, 운영 인증서 기반) → 커미셔닝 완료

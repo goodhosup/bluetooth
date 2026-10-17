@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    participant HA as Host A
+    participant A as Controller A
+    participant B as Controller B
+    participant HB as Host B
+    A->>HA: HCI_IO_Capability_Request
+    HA->>A: IO Capability Request Reply (IO 능력, OOB, 인증 요구)
+    A->>B: LMP_IO_Capability_Req / Res
+    Note over A,B: 1단계: 공개 키 교환 (LMP_encapsulated_header/payload)
+    Note over A,B: 2단계: 인증 1 — 커밋(f1)과 논스 교환
+    A->>HA: HCI_User_Confirmation_Request (6자리 g 값)
+    B->>HB: HCI_User_Confirmation_Request (같은 6자리)
+    Note over HA,HB: 사용자가 양쪽 숫자를 비교·확인
+    Note over A,B: 3단계: 인증 2 — DHKey Check (f3)
+    Note over A,B: 4단계: Link Key = f2(DHKey, …)
+    A->>HA: HCI_Simple_Pairing_Complete · HCI_Link_Key_Notification
+    Note over A,B: 5단계: LMP 인증 + 암호화 시작

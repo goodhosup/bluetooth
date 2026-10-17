@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant O as Path Origin (스위치)
+    participant R1 as 중간 노드 A
+    participant R2 as 중간 노드 B
+    participant T as Path Target (조명 그룹)
+    O->>R1: PATH_REQUEST (플러딩)
+    R1->>R2: PATH_REQUEST (경로 지표 누적)
+    R2->>T: PATH_REQUEST
+    T->>R2: PATH_REPLY
+    R2->>R1: PATH_REPLY
+    R1->>O: PATH_REPLY
+    Note over O,T: 경로 위 노드만 Forwarding Table에 항목 저장
+    O->>R1: 데이터 (Directed 자격 증명)
+    R1->>R2: 데이터
+    R2->>T: 데이터
+    Note over R1,R2: 경로 밖 Relay는 이 메시지를 전달하지 않음

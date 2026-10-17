@@ -1,0 +1,9 @@
+flowchart TB
+    subgraph H["Host (OS · 앱 프로세서)"]
+        P["프로파일 · 앱"] --> G["GATT · ATT · SMP · GAP · L2CAP"]
+    end
+    subgraph C["Controller (Bluetooth 칩)"]
+        LL["Link Layer / LMP · Baseband"] --> R["Radio (PHY)"]
+    end
+    G -- "HCI 명령 · ACL/ISO 데이터" --> LL
+    LL -- "HCI 이벤트 · ACL/ISO 데이터" --> G

@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> Normal
+    Normal --> InProgress: IV Update Flag 1 (IV Index + 1)
+    InProgress --> Normal: 최소 96시간 뒤 Flag 0
+    note right of InProgress
+      송신: 이전 IV Index 사용
+      수신: 이전·새 IV Index 모두 허용
+    end note
+    note right of Normal
+      송신·수신: 현재 IV Index
+      SEQ를 0부터 다시 사용
+    end note

@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant HI as Initiator Host
+    participant I as Initiator LL
+    participant R as Reflector LL
+    I->>R: LL_CS_CAPABILITIES_REQ / RSP (모드·역할·안테나·RTT 능력)
+    I->>R: LL_CS_SEC_REQ / RSP (IV·IN·PV 교환 → DRBG 시드)
+    I->>R: LL_CS_FAE_REQ / RSP (선택: 주파수 작동 오차 표)
+    I->>R: LL_CS_CONFIG_REQ / RSP (Config ID, 모드 조합, 채널 맵, 스텝 수, 역할)
+    HI->>I: HCI_LE_CS_Set_Procedure_Parameters · HCI_LE_CS_Procedure_Enable
+    I->>R: LL_CS_REQ / LL_CS_RSP / LL_CS_IND (시작 시점·이벤트 간격·절차 반복)
+    Note over I,R: 서브이벤트: Mode 0 스텝 → Mode 1/2/3 스텝 (채널은 DRBG로 섞음)
+    I-->>HI: LE CS Subevent Result (스텝별 위상·RTT·품질)
+    Note over HI: Host가 Reflector 측 결과(RAS로 수신)와 합쳐 거리 계산

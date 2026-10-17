@@ -1,0 +1,12 @@
+flowchart LR
+    A[시작하기] --> B[공통 기초<br/>ISM · GFSK · 도약 · 저전력]
+    B --> C[LE 컨트롤러<br/>PHY · 광고 · 연결]
+    C --> D[LE 호스트<br/>L2CAP · ATT · GATT · GAP]
+    D --> E[보안<br/>페어링 · 프라이버시]
+    B --> F[Classic<br/>기저대역 · LMP · 프로파일]
+    C --> G[고급 LE<br/>ISO · 방향 탐지 · CS]
+    G --> H[LE Audio]
+    D --> I[Mesh]
+    E --> J[구현과 실무<br/>HCI · 로그 · 전류]
+    F --> J
+    H --> K[최신 동향<br/>Core 6.x]

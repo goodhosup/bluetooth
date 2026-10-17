@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant HC as Central Host
+    participant C as Central LL
+    participant P as Peripheral LL
+    HC->>C: HCI_LE_Set_Host_Channel_Classification (나쁜 채널 표시)
+    C->>P: LL_CHANNEL_REPORTING_IND (5.3, 보고 켜기·주기 조건)
+    P->>C: LL_CHANNEL_STATUS_IND (37채널 × 2비트 분류)
+    Note over C: Host 정보 + 자체 측정 + Peripheral 보고 → 새 ChM
+    C->>P: LL_CHANNEL_MAP_IND (ChM, Instant)
+    Note over C,P: Instant 이벤트부터 새 채널 맵

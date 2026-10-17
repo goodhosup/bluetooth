@@ -1,0 +1,12 @@
+flowchart TD
+    A["SIG 멤버 가입<br/>(Adopter 이상)"] --> B["Qualification Workspace 로그인"]
+    B --> C{"새로 구현·수정한 계층이 있나?"}
+    C -- "아니오: 인증 모듈·스택 그대로" --> D["기존 설계 사용<br/>DN 또는 QDID 참조"]
+    C -- "예" --> E["새 설계 생성<br/>Core Configuration 선택"]
+    E --> F["TCRL 기준 시험 목록 도출<br/>ICS 작성"]
+    F --> G["시험 수행 (자체 또는 시험소)<br/>결과·증빙 업로드"]
+    D --> H["제품 정보 입력<br/>(모델명 등 마케팅 자료와 일치)"]
+    G --> H
+    H --> I["Product Qualification Fee 납부"]
+    I --> J["제출 → SIG 검토"]
+    J --> K["인증 제품 목록 등재<br/>로고·상표 사용"]

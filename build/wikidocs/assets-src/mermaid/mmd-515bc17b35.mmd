@@ -1,0 +1,7 @@
+flowchart TB
+    App["앱 (Python·C·Qt 등)"] -->|D-Bus| D["bluetoothd<br/>프로파일·GATT 클라이언트/서버·에이전트"]
+    CLI["bluetoothctl"] -->|D-Bus| D
+    MG["btmgmt"] -->|mgmt 소켓| K
+    D -->|mgmt 소켓| K["Linux 커널<br/>HCI core · L2CAP · SMP · mgmt"]
+    K -->|HCI: UART·USB·SDIO| C["Controller 펌웨어"]
+    MON["btmon"] -.->|모니터 채널| K

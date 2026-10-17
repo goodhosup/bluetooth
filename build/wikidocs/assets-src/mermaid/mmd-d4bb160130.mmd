@@ -1,0 +1,14 @@
+sequenceDiagram
+    autonumber
+    participant ADV as 광고자 (예: Auracast 송신기)
+    participant PH as 휴대폰
+    participant HA as 보청기
+    ADV-->>PH: ADV_EXT_IND (37/38/39, AuxPtr)
+    ADV-->>PH: AUX_ADV_IND (SyncInfo)
+    Note over PH: Create_Sync → 일정표 획득
+    ADV-->>PH: AUX_SYNC_IND (주기 T마다)
+    Note over PH,HA: 휴대폰과 보청기는 이미 LE 연결 중
+    PH->>HA: LL_PERIODIC_SYNC_IND (SyncInfo + 시각 기준)
+    Note over HA: 스캔 없이 바로 동기
+    ADV-->>HA: AUX_SYNC_IND (+ ACAD의 BIGInfo)
+    Note over HA: BIG 동기 → 오디오 수신

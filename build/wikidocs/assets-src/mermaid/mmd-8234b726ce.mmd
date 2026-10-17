@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant HP as Peripheral Host
+    participant P as Peripheral LL
+    participant C as Central LL
+    participant HC as Central Host
+    HP->>P: HCI_LE_Connection_Update (Min/Max Interval, Latency, Timeout)
+    P->>C: LL_CONNECTION_PARAM_REQ
+    C-->>HC: LE Remote Connection Parameter Request
+    HC->>C: HCI_LE_Remote_Connection_Parameter_Request_Reply
+    C->>P: LL_CONNECTION_UPDATE_IND (Instant = 현재 이벤트 + n)
+    Note over C,P: instant 이벤트부터 새 파라미터 (옛 앵커 + WinOffset 뒤 전송 창)
+    C-->>HC: LE Connection Update Complete
+    P-->>HP: LE Connection Update Complete

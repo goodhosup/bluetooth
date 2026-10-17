@@ -1,0 +1,5 @@
+flowchart LR
+    A["채널 상태 평가<br/>(Central 자체 측정<br/>+ Peripheral 보고<br/>+ Host 정보)"] --> B["채널 맵 결정<br/>79비트: 사용/미사용<br/>최소 20채널 사용"]
+    B --> C["LMP_set_AFH<br/>(맵 + 적용 시점 instant)"]
+    C --> D["도약 커널이 미사용<br/>채널을 고르면<br/>사용 채널로 재배치"]
+    D --> A

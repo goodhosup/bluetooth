@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant HC as Central Host
+    participant C as Central LL
+    participant P as Peripheral LL
+    participant HP as Peripheral Host
+    HC->>C: HCI_LE_Set_CIG_Parameters (SDU_Interval, Framing, Max_Transport_Latency, RTN …)
+    HC->>C: HCI_LE_Create_CIS (CIS ↔ ACL 연결 핸들)
+    C->>P: LL_CIS_REQ (CIG/CIS ID, PHY, Max_SDU/PDU, NSE, BN, FT, ISO_Interval, 오프셋 범위)
+    P-->>HP: LE CIS Request
+    HP->>P: HCI_LE_Accept_CIS_Request
+    P->>C: LL_CIS_RSP (CIS_Offset 범위)
+    C->>P: LL_CIS_IND (CIS AA, CIS_Offset, CIG_Sync_Delay, CIS_Sync_Delay, 기준 이벤트)
+    Note over C,P: CIS 앵커에서 첫 서브이벤트
+    C-->>HC: LE CIS Established
+    P-->>HP: LE CIS Established
+    HC->>C: HCI_LE_Setup_ISO_Data_Path (HCI 또는 벤더 경로·코덱)

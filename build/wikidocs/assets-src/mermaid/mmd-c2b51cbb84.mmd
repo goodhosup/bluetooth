@@ -1,0 +1,16 @@
+stateDiagram-v2
+    [*] --> Standby
+    Standby --> Advertising: 광고 시작
+    Advertising --> Standby: 광고 중지 · 시간 만료
+    Standby --> Scanning: 스캔 시작
+    Scanning --> Standby: 스캔 중지
+    Standby --> Initiating: 연결 생성 요청
+    Initiating --> Standby: 취소 · 시간 만료
+    Advertising --> Connection: CONNECT_IND 수신 (Peripheral)
+    Initiating --> Connection: CONNECT_IND 송신 (Central)
+    Connection --> Standby: 연결 종료 · 감시 타임아웃
+    Standby --> Synchronization: 주기적 광고·BIG 동기
+    Synchronization --> Standby: 동기 종료 · 손실
+    Standby --> IsoBroadcasting: BIG 생성
+    IsoBroadcasting --> Standby: BIG 종료
+    state "Isochronous Broadcasting" as IsoBroadcasting

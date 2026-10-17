@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    participant C as Central (Initiator)
+    participant P as Peripheral (Responder)
+    P-->>C: Security Request (선택, AuthReq)
+    Note over C,P: 페이즈 1 — 능력 교환
+    C->>P: Pairing Request (IO Cap, OOB, AuthReq, MaxKeySize, Key Dist)
+    P->>C: Pairing Response (같은 필드)
+    Note over C,P: 페이즈 2 — LE Secure Connections
+    C->>P: Pairing Public Key (PKa)
+    P->>C: Pairing Public Key (PKb)
+    Note over C,P: 양쪽 DHKey = ECDH(자기 개인 키, 상대 공개 키)
+    P->>C: Pairing Confirm (Cb = f4(PKb, PKa, Nb, 0))
+    C->>P: Pairing Random (Na)
+    P->>C: Pairing Random (Nb)
+    Note over C,P: NC: 양쪽 화면에 g2(PKa, PKb, Na, Nb) mod 10^6 표시 → 사용자 확인
+    Note over C,P: f5(DHKey, Na, Nb, A, B) → MacKey, LTK
+    C->>P: Pairing DHKey Check (Ea = f6(MacKey, …))
+    P->>C: Pairing DHKey Check (Eb)
+    Note over C,P: LL 암호화 시작 (LL_ENC_REQ … LL_START_ENC_RSP, LTK 사용)
+    Note over C,P: 페이즈 3 — 암호화된 링크에서 키 분배
+    P->>C: Identity Information (IRK) · Identity Address Information
+    C->>P: Identity Information (IRK) · Identity Address Information

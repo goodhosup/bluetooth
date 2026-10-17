@@ -1,0 +1,20 @@
+sequenceDiagram
+    autonumber
+    participant C as Unicast Client (휴대폰)
+    participant S as Unicast Server (이어버드)
+    Note over C,S: ACL 연결 · 암호화 · GATT 탐색 (PACS, ASCS)
+    C->>S: Read Sink PAC, Audio Locations, Available Contexts
+    C->>S: ASE CP: Config Codec (LC3, 48 kHz, 10 ms, 120 B, Front Left)
+    S-->>C: ASE 알림: Codec Configured (+ 선호 QoS: PHY, RTN, Max Latency, PD 범위)
+    C->>S: ASE CP: Config QoS (CIG_ID, CIS_ID, SDU 간격, RTN, Max Latency, Presentation Delay)
+    S-->>C: ASE 알림: QoS Configured
+    C->>S: ASE CP: Enable (Metadata: Streaming_Audio_Contexts = Media)
+    S-->>C: ASE 알림: Enabling
+    Note over C: HCI_LE_Set_CIG_Parameters → HCI_LE_Create_CIS
+    C->>S: LL_CIS_REQ
+    S->>C: LL_CIS_RSP
+    C->>S: LL_CIS_IND → CIS 수립
+    Note over C,S: 양쪽 HCI_LE_Setup_ISO_Data_Path
+    Note over S: Sink ASE: 수신 준비가 되면 서버가 스스로 Receiver Start Ready
+    S-->>C: ASE 알림: Streaming
+    C->>S: CIS 위 LC3 프레임 (10 ms마다)

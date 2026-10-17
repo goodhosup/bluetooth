@@ -1,0 +1,6 @@
+flowchart LR
+    A["광고 수신<br/>TxAdd=1, 상위 2비트=01"] --> B["prand 추출"]
+    B --> C["저장된 IRK마다<br/>ah(IRK, prand) 계산"]
+    C --> D{"hash 일치?"}
+    D -- "예" --> E["본딩된 기기 식별<br/>(Identity Address)"]
+    D -- "아니오" --> F["모르는 기기"]

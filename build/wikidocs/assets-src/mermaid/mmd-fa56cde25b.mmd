@@ -1,0 +1,13 @@
+sequenceDiagram
+    autonumber
+    participant T as RF 테스터
+    participant D as DUT (DTM 펌웨어)
+    T->>D: Reset / Setup (PHY, 변조 지수 등)
+    D-->>T: Status OK
+    T->>D: Receiver Test (RF 채널 19)
+    loop 정해진 수의 시험 패킷
+        T-->>D: 시험 패킷 (PRBS9, 37 B)
+    end
+    T->>D: Test End
+    D-->>T: Packet Report (수신 성공 수)
+    Note over T: PER = 1 − 수신 수 / 송신 수

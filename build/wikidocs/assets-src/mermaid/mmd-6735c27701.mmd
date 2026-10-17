@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant C as Central LL
+    participant P as Peripheral LL
+    Note over C,P: connEventCounter = 100
+    C->>P: LL_PHY_UPDATE_IND (C→P: 2M, P→C: 2M, Instant = 106)
+    P->>C: (ACK — 다음 패킷의 NESN)
+    Note over C,P: 이벤트 101–105: 옛 PHY
+    Note over C,P: 이벤트 106부터: 2M PHY

@@ -1,0 +1,6 @@
+flowchart LR
+    A["확장 광고 ADV_EXT_IND / AUX_ADV_IND<br/>Broadcast Audio Announcement (Broadcast_ID)"] --> B["주기적 광고 AUX_SYNC_IND<br/>Basic Audio Announcement (BASE)<br/>+ ACAD의 BIGInfo"]
+    B --> C["BIG<br/>BIS 1 … BIS n"]
+    D["Broadcast Sink"] -. 1 스캔 .-> A
+    D -. 2 PA 동기 .-> B
+    D -. 3 BIG 동기 · 원하는 BIS 선택 .-> C

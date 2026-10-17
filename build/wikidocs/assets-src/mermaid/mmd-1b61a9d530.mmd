@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    participant HC as Central Host
+    participant C as Central LL (Initiator)
+    participant P as Peripheral LL (Advertiser)
+    participant HP as Peripheral Host
+    HC->>C: HCI_LE_Extended_Create_Connection (필터 정책, PHY별 스캔·연결 파라미터)
+    Note over C: Initiating 상태 — 광고 채널 스캔
+    P-->>C: ADV_IND (또는 ADV_EXT_IND → AUX_ADV_IND)
+    C->>P: CONNECT_IND (T_IFS 뒤) / AUX_CONNECT_REQ
+    P-->>C: AUX_CONNECT_RSP (확장 광고일 때만)
+    Note over C,P: 양쪽 Connection 상태 진입 · 역할 확정
+    Note over C,P: transmitWindowDelay + WinOffset 뒤 전송 창
+    C->>P: 첫 데이터 PDU (첫 앵커 포인트)
+    P->>C: 응답 (T_IFS 뒤)
+    C-->>HC: LE Enhanced Connection Complete (v2: 광고 핸들 포함)
+    P-->>HP: LE Enhanced Connection Complete
+    Note over C,P: 이후 LL_VERSION_IND · LL_FEATURE_REQ · LL_LENGTH_REQ · LL_PHY_REQ 등

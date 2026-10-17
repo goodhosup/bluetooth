@@ -1,0 +1,29 @@
+flowchart TB
+    subgraph APP["응용 프로파일 (제품 요구 묶음)"]
+        TMAP["TMAP<br/>전화·미디어"]
+        HAP["HAP / HAS<br/>보청기"]
+        PBP["PBP<br/>공공 브로드캐스트"]
+        GMAP["GMAP<br/>게이밍"]
+    end
+    subgraph CTRL["공통 절차 · 제어"]
+        CAP["CAP / CAS<br/>공통 절차"]
+        CSIP["CSIP / CSIS<br/>코디네이트 세트"]
+        VCP["VCP / VCS·VOCS·AICS<br/>볼륨"]
+        MICP["MICP / MICS<br/>마이크"]
+        MCP["MCP / MCS<br/>미디어"]
+        CCP["CCP / TBS<br/>통화"]
+    end
+    subgraph STREAM["스트림 설정"]
+        BAP["BAP<br/>Unicast · Broadcast"]
+        PACS["PACS<br/>능력 공개"]
+        ASCS["ASCS<br/>ASE 상태"]
+        BASS["BASS<br/>브로드캐스트 보조"]
+    end
+    subgraph CORE["Core 5.2+ (컨트롤러·호스트)"]
+        ISO["등시성 채널<br/>CIS·BIS, ISOAL"]
+        GATT["GATT / EATT"]
+        PA["확장·주기적 광고"]
+    end
+    LC3["LC3 코덱"]
+    APP --> CTRL --> STREAM --> CORE
+    BAP -. 필수 코덱 .-> LC3

@@ -1,0 +1,21 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> CodecConfigured: Config Codec
+    CodecConfigured --> CodecConfigured: Config Codec (재설정)
+    CodecConfigured --> QoSConfigured: Config QoS
+    QoSConfigured --> CodecConfigured: Config Codec
+    QoSConfigured --> QoSConfigured: Config QoS (재설정)
+    QoSConfigured --> Enabling: Enable
+    Enabling --> Streaming: Receiver Start Ready
+    Enabling --> Disabling: Disable (Source ASE)
+    Streaming --> Disabling: Disable (Source ASE)
+    Enabling --> QoSConfigured: Disable (Sink ASE)
+    Streaming --> QoSConfigured: Disable (Sink ASE)
+    Disabling --> QoSConfigured: Receiver Stop Ready
+    CodecConfigured --> Releasing: Release
+    QoSConfigured --> Releasing: Release
+    Enabling --> Releasing: Release
+    Streaming --> Releasing: Release
+    Disabling --> Releasing: Release
+    Releasing --> Idle: 해제 완료
+    Releasing --> CodecConfigured: 해제 완료 (설정 캐시)

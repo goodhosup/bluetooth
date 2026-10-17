@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant AP as ESL 접근점 (광고자)
+    participant G0 as 그룹 0 가격표들
+    participant G1 as 그룹 1 가격표들
+    Note over AP,G1: 주기적 광고 이벤트 n
+    AP-->>G0: 서브이벤트 0: AUX_SYNC_SUBEVENT_IND (ESL ID 0, 1, 5에 명령)
+    G0->>AP: 응답 슬롯 0 (ID 0)
+    G0->>AP: 응답 슬롯 1 (ID 1)
+    G0->>AP: 응답 슬롯 2 (ID 5)
+    AP-->>G1: 서브이벤트 1: AUX_SYNC_SUBEVENT_IND (ESL ID 3에 명령)
+    G1->>AP: 응답 슬롯 0 (ID 3)
+    Note over G0,G1: 나머지 시간은 수면, 다음 이벤트의 자기 서브이벤트에 다시 깨어남

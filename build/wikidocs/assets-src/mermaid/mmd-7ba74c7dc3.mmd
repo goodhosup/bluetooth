@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant C as Central (L2CAP)
+    participant P as Peripheral (L2CAP)
+    C->>P: LE_CREDIT_BASED_CONNECTION_REQ (SPSM, SCID=0x0040, MTU=512, MPS=247, Credits=10)
+    P->>C: LE_CREDIT_BASED_CONNECTION_RSP (DCID=0x0041, MTU=1024, MPS=247, Credits=5, Result=성공)
+    C->>P: K-frame ×5 (크레딧 5 → 0)
+    Note over C: 크레딧 0 → 송신 중지
+    P->>C: FLOW_CONTROL_CREDIT_IND (CID=0x0041, Credits=+5)
+    C->>P: K-frame …

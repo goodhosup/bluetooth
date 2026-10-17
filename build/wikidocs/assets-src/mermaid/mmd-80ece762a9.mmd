@@ -1,0 +1,15 @@
+sequenceDiagram
+    autonumber
+    participant A as 휴대폰 (Broadcast Assistant)
+    participant E as 이어버드 (Scan Delegator + Broadcast Sink)
+    participant T as TV (Broadcast Source)
+    A->>E: ACL 연결, BASS 탐색
+    A->>E: BASS CP: Remote Scan Started
+    T-->>A: 확장 광고 (Broadcast_ID, Broadcast_Name)
+    Note over A: 사용자에게 방송 목록 표시 → "Gym TV 2" 선택
+    A->>E: BASS CP: Add Source (주소, Adv_SID, Broadcast_ID, PA_Sync, BIS_Sync)
+    A-->>E: PAST로 주기적 광고 동기 정보 전달 (선택)
+    E-->>A: Broadcast Receive State: PA Synced, BIG_Encryption = Broadcast_Code required
+    A->>E: BASS CP: Set Broadcast_Code
+    Note over E,T: 이어버드가 BIG 동기화, 원하는 BIS 수신
+    E-->>A: Broadcast Receive State: BIS_Sync_State = 동기화됨

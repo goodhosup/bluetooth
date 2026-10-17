@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant C as 클라이언트 (Central)
+    participant S as 서버 (Peripheral)
+    Note over C,S: LE 연결 · 비강화 ATT(0x0004)는 항상 존재
+    C->>S: 페어링/암호화 시작 (본딩된 경우 LTK로 암호화)
+    C->>S: ATT_READ_BY_TYPE_REQ (Server Supported Features 0x2B3A)
+    S->>C: RSP: bit 0 = 1 (EATT 지원)
+    C->>S: ATT_WRITE_REQ (Client Supported Features 0x2B29, bit 1 = EATT, bit 2 = 다중 알림)
+    S->>C: ATT_WRITE_RSP
+    C->>S: L2CAP_CREDIT_BASED_CONNECTION_REQ (SPSM 0x0027, MTU 512, MPS 247, SCID ×3)
+    S->>C: L2CAP_CREDIT_BASED_CONNECTION_RSP (DCID ×3, Result 성공)
+    par 베어러 1
+        C->>S: ATT_READ_REQ (앱 A)
+    and 베어러 2
+        C->>S: ATT_WRITE_REQ (앱 B)
+    end
+    S->>C: ATT_READ_RSP (베어러 1)
+    S->>C: ATT_WRITE_RSP (베어러 2)

@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant H as Host
+    participant A as LL (A)
+    participant B as LL (B)
+    H->>A: HCI_LE_Set_Data_Length (TxOctets=251, TxTime=2120)
+    A->>B: LL_LENGTH_REQ (MaxRx 251/2120, MaxTx 251/2120)
+    B->>A: LL_LENGTH_RSP (MaxRx 251/2120, MaxTx 251/2120)
+    Note over A,B: 실효 Tx/Rx = min(내 Tx, 상대 Rx) → 251 B
+    A-->>H: LE Data Length Change

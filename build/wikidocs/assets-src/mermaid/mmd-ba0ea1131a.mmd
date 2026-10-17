@@ -1,0 +1,4 @@
+flowchart LR
+    A[평문 AD 구조들<br/>예: Service Data, Name] --> E[AES-CCM<br/>Key = Session Key<br/>Nonce = Randomizer ‖ IV]
+    R[Randomizer 5 B<br/>새 난수] --> E
+    E --> O[Encrypted Data AD 구조<br/>Randomizer ‖ 암호문 ‖ MIC 4 B]

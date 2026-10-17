@@ -1,0 +1,15 @@
+sequenceDiagram
+    autonumber
+    participant H as Host
+    participant C as Controller
+    participant P as 상대 기기
+    H->>C: HCI_LE_Set_Advertising_Enable (0x200A)
+    C-->>H: Command Complete (Opcode 0x200A, Status 0x00)
+    H->>C: HCI_LE_Create_Connection (0x200D)
+    C-->>H: Command Status (Status 0x00 = 접수)
+    Note over C,P: 광고 대기 → CONNECT_IND 전송
+    C-->>H: LE Meta (0x3E) / LE Connection Complete (Status 0x00, Handle)
+    H->>C: ACL Data (L2CAP / ATT)
+    C-->>H: Number Of Completed Packets
+    Note over C,P: 링크 감독 타임아웃 만료
+    C-->>H: Disconnection Complete (Reason 0x08)

@@ -1,0 +1,9 @@
+flowchart LR
+    A[PCM 입력<br/>10 ms] --> B[LD-MDCT<br/>주파수 영역]
+    B --> C[SNS<br/>스펙트럼 노이즈 셰이핑]
+    C --> D[TNS<br/>시간 영역 노이즈 셰이핑]
+    D --> E[양자화 +<br/>산술 부호화]
+    E --> F[노이즈 채움<br/>정보]
+    A --> G[피치 분석<br/>LTPF 파라미터]
+    F --> H[비트스트림<br/>N 바이트]
+    G --> H

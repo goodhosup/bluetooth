@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    participant D as Unprovisioned Device
+    participant P as Provisioner
+    D-->>P: Unprovisioned Device beacon (Device UUID, OOB Information, URI Hash)
+    Note over P,D: PB-ADV: Link Open/Ack · PB-GATT: LE 연결 + Mesh Provisioning Service
+    P->>D: Provisioning Invite (Attention Duration)
+    D->>P: Provisioning Capabilities (요소 수, 알고리즘, 공개 키 OOB, Static/Output/Input OOB)
+    P->>D: Provisioning Start (선택한 알고리즘 · 인증 방식)
+    P->>D: Provisioning Public Key
+    D->>P: Provisioning Public Key (또는 OOB로 미리 받은 키 사용)
+    Note over P,D: ECDHSecret 계산
+    Note over P,D: OOB 동작 (예: 기기가 3번 깜빡임 → 사용자가 3 입력)
+    P->>D: Provisioning Confirmation
+    D->>P: Provisioning Confirmation
+    P->>D: Provisioning Random
+    D->>P: Provisioning Random
+    Note over P,D: 상대 Confirmation 검증 → SessionKey, DevKey 유도
+    P->>D: Provisioning Data (NetKey, Key Index, Flags, IV Index, Unicast Address) + MIC
+    D->>P: Provisioning Complete
+    Note over P,D: 이후 설정: Config AppKey Add, Config Model App Bind, Publication/Subscription (DevKey 사용)

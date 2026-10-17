@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant C as GATT 클라이언트
+    participant S as GATT 서버
+    C->>S: ATT_EXCHANGE_MTU_REQ (247)
+    S->>C: ATT_EXCHANGE_MTU_RSP (247)
+    Note over C,S: ① 1차 서비스 발견
+    C->>S: READ_BY_GROUP_TYPE_REQ (0x0001–0xFFFF, 0x2800)
+    S->>C: RSP: [0x0001–0x0007 GAP] [0x0008–0x000F GATT] [0x0010–0x0015 0x180D] …
+    C->>S: READ_BY_GROUP_TYPE_REQ (0x0016–0xFFFF, 0x2800)
+    S->>C: ERROR_RSP (Attribute Not Found) → 끝
+    Note over C,S: ② 특성 발견 (서비스 범위 안)
+    C->>S: READ_BY_TYPE_REQ (0x0010–0x0015, 0x2803)
+    S->>C: RSP: [0x0011: Notify, 0x0012, 0x2A37] [0x0014: Read, 0x0015, 0x2A38]
+    Note over C,S: ③ 디스크립터 발견 (값 핸들 다음 ~ 다음 특성 직전)
+    C->>S: FIND_INFORMATION_REQ (0x0013–0x0013)
+    S->>C: RSP: [0x0013, 0x2902]
+    Note over C,S: ④ 알림 켜기
+    C->>S: WRITE_REQ (0x0013, 0x0001)
+    S->>C: WRITE_RSP
+    S-->>C: HANDLE_VALUE_NTF (0x0012, 심박값) …

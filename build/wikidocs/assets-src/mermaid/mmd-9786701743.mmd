@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant E as 이어버드 (MCP · CCP 클라이언트)
+    participant P as 휴대폰 (GMCS · GTBS 서버)
+    P-->>E: Notify Media State = Playing, Track Title
+    Note over E: 사용자가 이어버드를 두 번 탭
+    E->>P: Write Media Control Point: Next Track
+    P-->>E: Notify Track Changed, Track Title
+    P-->>E: Notify Incoming Call (URI), Call State = Incoming
+    Note over E: 벨소리 문맥으로 스트림 전환 (CAP), 사용자가 탭
+    E->>P: Write Call Control Point: Accept (Call_Index)
+    P-->>E: Notify Call State = Active

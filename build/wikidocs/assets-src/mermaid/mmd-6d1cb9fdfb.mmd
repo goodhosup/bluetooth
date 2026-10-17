@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    participant P as 휴대폰 (Set Coordinator / CAP Initiator)
+    participant L as 왼쪽 (Set Member, Rank 1)
+    participant R as 오른쪽 (Set Member, Rank 2)
+    L-->>P: 광고 (RSI, CAS UUID)
+    P->>L: 연결 · 페어링 · 암호화
+    P->>L: Read CSIS: SIRK, Set Size = 2, Rank = 1
+    Note over P: SIRK 저장 → 남은 구성원 1개 탐색
+    R-->>P: 광고 (RSI)
+    Note over P: RSI의 hash를 SIRK로 검증 → 같은 세트
+    P->>R: 연결 · 페어링 · 암호화 · Read CSIS (SIRK 일치 확인)
+    Note over P: 두 기기를 "Earbuds" 하나로 표시
+    P->>L: Write Set Member Lock = Locked
+    P->>R: Write Set Member Lock = Locked
+    Note over P,R: CAP Unicast Audio Start: 양쪽에 Config Codec · QoS · Enable (CIG 1 = CIS L + CIS R)
+    P->>L: Write Set Member Lock = Unlocked
+    P->>R: Write Set Member Lock = Unlocked

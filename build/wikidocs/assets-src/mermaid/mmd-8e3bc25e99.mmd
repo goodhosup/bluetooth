@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant BT as Bluetooth Controller
+    participant PTA as 공존 중재기 (PTA)
+    participant WL as Wi-Fi MAC
+    BT->>PTA: 요청 + 우선순위 높음 (SCO 음성 슬롯)
+    WL->>PTA: 요청 (데이터 송신)
+    PTA-->>BT: 허가
+    PTA-->>WL: 거부 (보류 또는 다른 시간)
+    Note over BT,WL: Bluetooth 슬롯 종료 후
+    WL->>PTA: 다시 요청
+    PTA-->>WL: 허가

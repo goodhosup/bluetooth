@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant A as LL (A, 수신 측)
+    participant B as LL (B, 송신 측)
+    Note over A: RSSI가 골든 범위보다 15 dB 높음
+    A->>B: LL_POWER_CONTROL_REQ (PHY=2M, Delta=-15 dB, A의 TxPower)
+    Note over B: 하한 때문에 -10 dB만 가능
+    B->>A: LL_POWER_CONTROL_RSP (Delta=-10, 최소 도달, APR)
+    Note over B: 나중에 스스로 +4 dB (예: 안테나 상황 변화)
+    B->>A: LL_POWER_CHANGE_IND (2M, Delta=+4, 새 TxPower)

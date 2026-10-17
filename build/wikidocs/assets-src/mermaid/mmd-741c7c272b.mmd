@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    participant SRC as Source (폰)
+    participant SNK as Sink (이어폰)
+    Note over SRC,SNK: ACL 연결 · 암호화 완료, SDP로 AudioSink(0x110B) 확인
+    SRC->>SNK: L2CAP 연결 (PSM 0x0019) — 시그널링 채널
+    SRC->>SNK: AVDTP_DISCOVER
+    SNK->>SRC: SEP 목록 (SEID, Sink, Audio, 사용 중 여부)
+    SRC->>SNK: AVDTP_GET_ALL_CAPABILITIES (SEID)
+    SNK->>SRC: 코덱 능력 (SBC: 샘플링·채널 모드·bitpool 범위 / AAC / 벤더), Delay Reporting
+    SRC->>SNK: AVDTP_SET_CONFIGURATION (선택한 코덱·파라미터)
+    SNK->>SRC: 수락
+    SRC->>SNK: AVDTP_OPEN
+    SNK->>SRC: 수락
+    SRC->>SNK: L2CAP 연결 (PSM 0x0019) — 미디어 채널
+    SRC->>SNK: AVDTP_START
+    SNK->>SRC: 수락
+    SNK-->>SRC: AVDTP_DELAYREPORT (선택)
+    loop 스트리밍
+        SRC->>SNK: RTP 미디어 패킷 (코덱 프레임 묶음)
+    end
+    SRC->>SNK: AVDTP_SUSPEND (통화 수신·일시정지)
