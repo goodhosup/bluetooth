@@ -1,0 +1,218 @@
+site_name: Bluetooth Handbook — Classic · LE · LE Audio
+site_description: Bluetooth Classic(BR/EDR)과 Low Energy, LE Audio, Mesh, Core 6.x Channel Sounding까지 — 초급부터 전문가까지 단계적으로 읽는 블루투스 핸드북
+site_author: Bluetooth Handbook
+site_url: https://goodhosup.github.io/bluetooth/
+repo_url: https://github.com/goodhosup/bluetooth
+repo_name: bluetooth
+edit_uri: edit/main/docs/
+copyright: 본문과 그림은 직접 작성했습니다. Bluetooth SIG 규격(Core Specification, 프로파일·서비스 규격)은 문서 이름과 Vol/Part/절만 출처 표기로 인용합니다.
+
+theme:
+  name: material
+  language: ko
+  font:
+    text: Noto Sans KR
+    code: JetBrains Mono
+  icon:
+    logo: material/bluetooth
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: 다크 모드로 전환
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: 라이트 모드로 전환
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - navigation.path
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+    - content.tooltips
+    - content.action.edit
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - path: javascripts/diagrams.mjs
+    type: module
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.mark
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
+  - pymdownx.superfences:
+      custom_fences:
+        # Material 기본 Mermaid 통합 대신 javascripts/diagrams.mjs가 렌더링 (큰 시퀀스 다이어그램 가독성)
+        - name: mermaid
+          class: diagram-src
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search:
+      lang:
+        - en
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+
+validation:
+  anchors: warn
+
+watch:
+  - includes
+
+nav:
+  - 홈: index.md
+  - 시작하기:
+      - getting-started/index.md
+      - Bluetooth 세대와 Core 버전: getting-started/generations.md
+      - Bluetooth SIG와 규격 체계: getting-started/sig-specs.md
+      - 규격 문서 읽는 법: getting-started/reading-specs.md
+      - 학습 로드맵: getting-started/roadmap.md
+  - 공통 기초:
+      - basics/index.md
+      - 2.4 GHz ISM 대역과 규제: basics/ism-band.md
+      - 무선 전파와 링크 버짓: basics/radio-channel.md
+      - 디지털 변조 (GFSK·DPSK): basics/modulation.md
+      - 주파수 도약과 AFH: basics/fhss-afh.md
+      - 저전력 설계 원리: basics/low-power.md
+      - Host·Controller·HCI: basics/architecture.md
+      - 프로토콜 스택 개요: basics/stack.md
+      - 디바이스 주소: basics/addresses.md
+      - Wi-Fi와의 공존: basics/coexistence.md
+  - LE 컨트롤러:
+      - le/index.md
+      - 물리계층:
+          - LE PHY (1M·2M·Coded): le/phy.md
+          - 채널과 송신 전력: le/channels.md
+          - 패킷 구조: le/packet.md
+      - 링크 계층:
+          - 링크 계층 상태 기계: le/link-layer-states.md
+          - 레거시 광고: le/legacy-advertising.md
+          - 확장 광고: le/extended-advertising.md
+          - 주기적 광고와 PAwR: le/periodic-advertising.md
+          - 스캔과 필터: le/scanning.md
+          - 연결 수립: le/connection.md
+          - 연결 이벤트와 파라미터: le/connection-events.md
+          - 채널 선택 알고리즘: le/channel-selection.md
+          - LL 제어 절차: le/ll-control.md
+          - 데이터 길이 확장 (DLE): le/data-length.md
+          - LE 전력 제어: le/power-control.md
+      - 고급 기능:
+          - 등시성 채널 (CIS·BIS): le/iso.md
+          - 방향 탐지 (AoA·AoD): le/direction-finding.md
+          - Channel Sounding: le/channel-sounding.md
+  - LE 호스트:
+      - host/index.md
+      - L2CAP: host/l2cap.md
+      - ATT: host/att.md
+      - GATT: host/gatt.md
+      - EATT: host/eatt.md
+      - GAP: host/gap.md
+      - 광고 데이터 형식 (AD Type): host/ad-types.md
+      - 대표 GATT 서비스: host/gatt-services.md
+      - 처리량 최적화: host/throughput.md
+  - 보안:
+      - security/index.md
+      - 보안 모델의 진화: security/evolution.md
+      - LE 페어링과 본딩: security/le-pairing.md
+      - 키 계층과 CTKD: security/keys.md
+      - 프라이버시와 RPA: security/privacy.md
+      - Classic 보안 (SSP): security/classic-security.md
+      - 알려진 공격과 대응: security/attacks.md
+      - 암호화된 광고 데이터: security/encrypted-ad.md
+  - Classic (BR/EDR):
+      - classic/index.md
+      - 피코넷과 기저대역: classic/baseband.md
+      - 조회와 페이징: classic/inquiry-paging.md
+      - 링크 관리자 (LMP): classic/lmp.md
+      - ACL과 SCO/eSCO: classic/acl-sco.md
+      - L2CAP·SDP·RFCOMM: classic/l2cap-sdp-rfcomm.md
+      - 오디오 프로파일 (A2DP·AVRCP·HFP): classic/audio-profiles.md
+      - 데이터 프로파일 (SPP·HID·PAN): classic/data-profiles.md
+  - LE Audio:
+      - audio/index.md
+      - LE Audio 개요: audio/overview.md
+      - LC3 코덱: audio/lc3.md
+      - BAP (Unicast·Broadcast): audio/bap.md
+      - PACS와 ASCS: audio/pacs-ascs.md
+      - CAP과 CSIP: audio/cap-csip.md
+      - Auracast 브로드캐스트: audio/auracast.md
+      - 볼륨·통화·미디어 제어: audio/control.md
+      - 보청기 프로파일 (HAP): audio/hap.md
+  - Mesh:
+      - mesh/index.md
+      - Mesh 개요와 관리형 플러딩: mesh/overview.md
+      - 프로비저닝: mesh/provisioning.md
+      - 네트워크·전송·접근 계층: mesh/layers.md
+      - 모델: mesh/models.md
+      - Mesh 보안: mesh/security.md
+      - Mesh 1.1: mesh/mesh-1-1.md
+  - 최신 동향:
+      - next/index.md
+      - Core 6.0–6.3: next/core-6.md
+      - Channel Sounding 활용: next/cs-applications.md
+      - HDT와 상위 대역 확장: next/hdt.md
+      - Matter·Thread와 Bluetooth: next/matter-thread.md
+  - 구현과 실무:
+      - practice/index.md
+      - 호스트 스택 비교: practice/stacks.md
+      - HCI 명령과 이벤트: practice/hci.md
+      - 로그 분석 (btmon·btsnoop·Wireshark): practice/logs.md
+      - 무선 스니퍼: practice/sniffer.md
+      - 저전력 설계와 전류 프로파일: practice/power-profile.md
+      - RF 시험과 안테나: practice/rf-testing.md
+      - 인증 (Qualification): practice/qualification.md
+  - 레퍼런스:
+      - reference/index.md
+      - Classic vs LE 비교: reference/classic-vs-le.md
+      - Bluetooth vs Wi-Fi vs 5G: reference/bt-vs-wifi-vs-5g.md
+      - Core 버전별 기능 인덱스: reference/version-index.md
+      - 규격 인덱스: reference/spec-index.md
+      - 약어 사전: reference/glossary.md
+      - 계산기: reference/calculators.md
+      - 참고 자료: reference/resources.md
